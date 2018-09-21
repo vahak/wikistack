@@ -25,13 +25,12 @@ app.get('/', function(req, res){
 });
 
 const init = async () => {
-  await models.User.sync()
-  await models.Page.sync()
-
-  yourExpressAppVar.listen(PORT, () => {
+  // this drops all tables then recreates them based on our JS definitions
+  await models.db.sync({force: true});
+  server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}!`);
   });
-}
+};
 
 init();
 app.listen(3000);
